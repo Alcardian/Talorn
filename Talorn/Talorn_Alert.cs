@@ -222,23 +222,37 @@ namespace Talorn
                 if (alertString.IndexOf("\"countedItems\":") > -1)
                 {
                     temp = alertString.Substring(alertString.IndexOf("\"countedItems\":"));
-                    temp = temp.Substring(temp.IndexOf(":"));
-                    temp = temp.Substring(1);
-                    if (temp.IndexOf(',') > -1)
+                    temp = temp.Substring(temp.IndexOf("["));
+
+                    int c;
+                    if ((c = Talorn_Core.getEndOfJSON(temp, 0)) > -1)
                     {
-                        temp = temp.Remove(temp.IndexOf(','));
+                        temp = temp.Remove(c);
+                        temp += "]";
+
+                        string name = temp.Remove(temp.IndexOf(",")-1);
+                        name = name.Substring(name.IndexOf("\"ItemType\":"));
+                        name = name.Substring(name.IndexOf(":")+2);
+
+                        int count;
+                        temp = temp.Substring(temp.IndexOf("\"ItemCount\":"));
+                        temp = temp.Substring(temp.IndexOf(":")+1);
+                        temp = temp.Remove(temp.IndexOf("}"));
+                        {
+                            int j;
+                            if (Int32.TryParse(temp, out j))
+                            {
+                                count = j;
+                            }
+                            else
+                            {
+                                //Could not parse if this happened
+                                count = -1;
+                            }
+                        }
+
+                        countedItems.Add(new Tuple<string, int>(name, count));
                     }
-                    else
-                    {
-                        temp = temp.Remove(temp.IndexOf('}'));
-                    }
-                    if (temp[0] == '[' && temp.Length > 0)
-                    {
-                        temp = temp.Substring(1);
-                    }
-                    //buffer.Add("Counted Items: " + temp);
-                    //TODO finish this so it shows the count
-                    countedItems.Add(new Tuple<string, int>(temp, -1));
                 }
             }
         }
@@ -312,7 +326,7 @@ namespace Talorn
                 tmp += "\nCounted Items: ";
                 foreach (Tuple<string, int> item in countedItems)
                 {
-                    tmp += item + ", ";
+                    tmp += item.Item1 + ": " + item.Item2 + ", ";
                 }
                 tmp = tmp.Remove(tmp.Length - 2);
             }
