@@ -38,22 +38,22 @@ namespace Talorn
 
             //ID
             temp = alertString.Substring(alertString.IndexOf("_id"));
-            temp = temp.Substring(temp.IndexOf("{"));
-            temp = temp.Substring(temp.IndexOf(":"));
+            temp = temp.Substring(temp.IndexOf('{'));
+            temp = temp.Substring(temp.IndexOf(':'));
             temp = temp.Substring(temp.IndexOf('"'));
             temp = temp.Remove(temp.IndexOf('}'));
             temp = temp.Remove(temp.Length - 1);
-            temp = temp.Substring(temp.LastIndexOf("\"") + 1);
+            temp = temp.Substring(temp.LastIndexOf('\"') + 1);
             //buffer.Add("ID: " + temp);
             id = temp;
 
             //Activation
             temp = alertString.Substring(alertString.IndexOf("Activation"));
-            temp = temp.Substring(temp.IndexOf("{"));
+            temp = temp.Substring(temp.IndexOf('{'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf('}'));
             temp = temp.Remove(temp.Length - 1);
-            temp = temp.Substring(temp.LastIndexOf("\"") + 1);
+            temp = temp.Substring(temp.LastIndexOf('\"') + 1);
             //buffer.Add("Activation: " + temp);
             {
                 long j;
@@ -70,11 +70,11 @@ namespace Talorn
 
             //Expiry
             temp = alertString.Substring(alertString.IndexOf("Expiry"));
-            temp = temp.Substring(temp.IndexOf("{"));
+            temp = temp.Substring(temp.IndexOf('{'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf('}'));
             temp = temp.Remove(temp.Length - 1);
-            temp = temp.Substring(temp.LastIndexOf("\"") + 1);
+            temp = temp.Substring(temp.LastIndexOf('\"') + 1);
             //buffer.Add("Expiry: " + temp);
             {
                 long j;
@@ -91,31 +91,31 @@ namespace Talorn
 
             //Mission Type
             temp = alertString.Substring(alertString.IndexOf("missionType"));
-            temp = temp.Substring(temp.IndexOf(":"));
+            temp = temp.Substring(temp.IndexOf(':'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf(','));
             temp = temp.Remove(temp.Length - 1);
-            temp = temp.Substring(temp.LastIndexOf("\"") + 1);
+            temp = temp.Substring(temp.LastIndexOf('\"') + 1);
             //buffer.Add("Mission Type: " + temp);
             missionType = temp;
 
             //faction
             temp = alertString.Substring(alertString.IndexOf("faction"));
-            temp = temp.Substring(temp.IndexOf(":"));
+            temp = temp.Substring(temp.IndexOf(':'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf(','));
             temp = temp.Remove(temp.Length - 1);
-            temp = temp.Substring(temp.LastIndexOf("\"") + 1);
+            temp = temp.Substring(temp.LastIndexOf('\"') + 1);
             //buffer.Add("Faction: " + temp);
             faction = temp;
 
             //location
             temp = alertString.Substring(alertString.IndexOf("location"));
-            temp = temp.Substring(temp.IndexOf(":"));
+            temp = temp.Substring(temp.IndexOf(':'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf(','));
             temp = temp.Remove(temp.Length - 1);
-            temp = temp.Substring(temp.LastIndexOf("\"") + 1);
+            temp = temp.Substring(temp.LastIndexOf('\"') + 1);
             //buffer.Add("Location: " + temp);
             location = temp;
 
@@ -127,7 +127,7 @@ namespace Talorn
                 temp = temp.Substring(1);
                 temp = temp.Remove(temp.IndexOf(','));
                 temp = temp.Remove(temp.Length - 1);
-                temp = temp.Substring(temp.LastIndexOf("\"") + 1);
+                temp = temp.Substring(temp.LastIndexOf('\"') + 1);
                 //buffer.Add("levelOverride: " + temp);
                 levelOverride = temp;
             }
@@ -187,7 +187,7 @@ namespace Talorn
             if (alertString.IndexOf("isSharkwingMission") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("isSharkwingMission"));
-                temp = temp.Substring(temp.IndexOf(":"));
+                temp = temp.Substring(temp.IndexOf(':'));
                 temp = temp.Substring(1);
                 temp = temp.Remove(temp.IndexOf(','));
                 //buffer.Add("isSharkwingMission: " + temp);
@@ -202,7 +202,7 @@ namespace Talorn
                 if (alertString.IndexOf("\"credits\":") > -1)
                 {
                     temp = alertString.Substring(alertString.IndexOf("\"credits\":"));
-                    temp = temp.Substring(temp.IndexOf(":"));
+                    temp = temp.Substring(temp.IndexOf(':'));
                     temp = temp.Substring(1);
                     if (temp.IndexOf(',') > -1)
                     {
@@ -231,7 +231,7 @@ namespace Talorn
                 if (alertString.IndexOf("\"items\":") > -1)
                 {
                     temp = alertString.Substring(alertString.IndexOf("\"items\":"));
-                    temp = temp.Substring(temp.IndexOf(":"));
+                    temp = temp.Substring(temp.IndexOf(':'));
                     temp = temp.Substring(1);
                     if (temp.IndexOf(',') > -1)
                     {
@@ -269,7 +269,7 @@ namespace Talorn
                 if (alertString.IndexOf("\"countedItems\":") > -1)
                 {
                     temp = alertString.Substring(alertString.IndexOf("\"countedItems\":"));
-                    temp = temp.Substring(temp.IndexOf("["));
+                    temp = temp.Substring(temp.IndexOf('['));
 
                     int c;
                     if ((c = Talorn_Core.getEndOfJSON(temp, 0)) > -1)
@@ -277,14 +277,14 @@ namespace Talorn
                         temp = temp.Remove(c);
                         temp += "]";
 
-                        string name = temp.Remove(temp.IndexOf(",")-1);
+                        string name = temp.Remove(temp.IndexOf(',')-1);
                         name = name.Substring(name.IndexOf("\"ItemType\":"));
-                        name = name.Substring(name.IndexOf(":")+2);
+                        name = name.Substring(name.IndexOf(':')+2);
 
                         int count;
                         temp = temp.Substring(temp.IndexOf("\"ItemCount\":"));
-                        temp = temp.Substring(temp.IndexOf(":")+1);
-                        temp = temp.Remove(temp.IndexOf("}"));
+                        temp = temp.Substring(temp.IndexOf(':')+1);
+                        temp = temp.Remove(temp.IndexOf('}'));
                         {
                             int j;
                             if (Int32.TryParse(temp, out j))
