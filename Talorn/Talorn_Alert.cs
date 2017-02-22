@@ -123,7 +123,7 @@ namespace Talorn
             if (alertString.IndexOf("levelOverride") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("levelOverride"));
-                temp = temp.Substring(temp.IndexOf(":"));
+                temp = temp.Substring(temp.IndexOf(':'));
                 temp = temp.Substring(1);
                 temp = temp.Remove(temp.IndexOf(','));
                 temp = temp.Remove(temp.Length - 1);
@@ -133,13 +133,50 @@ namespace Talorn
             }
 
             //int minEnemyLevel
+            if (alertString.IndexOf("\"minEnemyLevel\":") > -1)
+            {
+                temp = alertString.Substring(alertString.IndexOf("\"minEnemyLevel\":"));
+                temp = temp.Substring(temp.IndexOf(':')+1);
+                temp = temp.Remove(temp.IndexOf(','));
+                {
+                    int j;
+                    if (Int32.TryParse(temp, out j))
+                    {
+                        minEnemyLevel = j;
+                    }
+                    else
+                    {
+                        //Could not parse if this happened
+                        minEnemyLevel = -1;
+                    }
+                }
+            }
+
             //int maxEnemyLevel
+            if (alertString.IndexOf("\"maxEnemyLevel\":") > -1)
+            {
+                temp = alertString.Substring(alertString.IndexOf("\"maxEnemyLevel\":"));
+                temp = temp.Substring(temp.IndexOf(':') + 1);
+                temp = temp.Remove(temp.IndexOf(','));
+                {
+                    int j;
+                    if (Int32.TryParse(temp, out j))
+                    {
+                        maxEnemyLevel = j;
+                    }
+                    else
+                    {
+                        //Could not parse if this happened
+                        maxEnemyLevel = -1;
+                    }
+                }
+            }
 
             //Archwing
             if (alertString.IndexOf("archwingRequired") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("archwingRequired"));
-                temp = temp.Substring(temp.IndexOf(":"));
+                temp = temp.Substring(temp.IndexOf(':'));
                 temp = temp.Substring(1);
                 temp = temp.Remove(temp.IndexOf(','));
                 //buffer.Add("archwingRequired: " + temp);
@@ -298,7 +335,16 @@ namespace Talorn
                 tmp += "\nlevelOverride: " + levelOverride;
             }
             //int minEnemyLevel;
+            if (minEnemyLevel != -1)
+            {
+                tmp += "\nMinimum Enemy Level: " + minEnemyLevel;
+            }
+
             //int maxEnemyLevel;
+            if (maxEnemyLevel != -1)
+            {
+                tmp += "\nMaximum Enemy Level: " + maxEnemyLevel;
+            }
 
             //bool archwingRequired = false;
             if (archwingRequired)
