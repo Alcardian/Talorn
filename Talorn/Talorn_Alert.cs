@@ -7,27 +7,27 @@ namespace Talorn
 {
     public class Talorn_Alert
     {
-        string id;
+        private string id;
         //AlertTime activation;
         //AlertTime expiry;
-        long activation = -1;
-        long expiry = -1;
+        private long activation = -1;
+        private long expiry = -1;
 
-        string missionType = "Unknown";
-        string faction = "Unknown";
-        string location = "Unknown";
-        string levelOverride = "Unknown";
+        private string missionType = "Unknown";
+        private string faction = "Unknown";
+        private string location = "Unknown";
+        private string levelOverride = "Unknown";
         //String enemySpec;
-        int minEnemyLevel = -1;
-        int maxEnemyLevel = -1;
+        private int minEnemyLevel = -1;
+        private int maxEnemyLevel = -1;
         //double difficulty;
         //int seed;
-        bool archwingRequired = false;
-        bool sharkwingMission = false;
-        int maxWaveNum = 0;
+        private bool archwingRequired = false;
+        private bool sharkwingMission = false;
+        private int maxWaveNum = 0;
 
-        int credits = 0;
-        string[] items = null;
+        private int credits = 0;
+        private string[] items = null;
         //List<string> items = new List<string>();
         List<Tuple<string, int>> countedItems = new List<Tuple<string, int>>();
 
@@ -332,6 +332,127 @@ namespace Talorn
             }
 
             return tmp;
+        }
+
+        public string getID()
+        {
+            return id;
+        }
+        public void setID(string ID)
+        {
+            id = ID;
+        }
+        public long getActivation()
+        {
+            return activation;
+        }
+        public void setActivation(long Activation)
+        {
+            activation = Activation;
+        }
+        public long getExpiry()
+        {
+            return expiry;
+        }
+        public void setExpiry(long Expiry)
+        {
+            expiry = Expiry;
+        }
+        public string getMissionType()
+        {
+            return missionType;
+        }
+        public void setMissionType(string MissionType)
+        {
+            missionType = MissionType;
+        }
+        public string getFaction()
+        {
+            return faction;
+        }
+        public void setFaction(string Faction)
+        {
+            faction = Faction;
+        }
+        public string getLocation()
+        {
+            return location;
+        }
+        public void setLocation(string Location)
+        {
+            location = Location;
+        }
+        public string getLevelOverride()
+        {
+            return levelOverride;
+        }
+        public void setLevelOverride(string LevelOverride)
+        {
+            levelOverride = LevelOverride;
+        }
+        public int getMinEnemyLevel()
+        {
+            return minEnemyLevel;
+        }
+        public void setMinEnemyLevel(int MinEnemyLevel)
+        {
+            minEnemyLevel = MinEnemyLevel;
+        }
+        public int getMaxEnemyLevel()
+        {
+            return maxEnemyLevel;
+        }
+        public void setMaxEnemyLevel(int MaxEnemyLevel)
+        {
+            maxEnemyLevel = MaxEnemyLevel;
+        }
+        public bool isArchwingRequired()
+        {
+            return archwingRequired;
+        }
+        public void setArchwingRequired(bool ArchwingRequired)
+        {
+            archwingRequired = ArchwingRequired;
+        }
+        public bool isSharkwingMission()
+        {
+            return sharkwingMission;
+        }
+        public void setSharkwingMission(bool SharkwingMission)
+        {
+            sharkwingMission = SharkwingMission;
+        }
+        public int getMaxWaveNumber()
+        {
+            return maxWaveNum;
+        }
+        public void setMaxWaveNumber(int MaxWaveNumber)
+        {
+            maxWaveNum = MaxWaveNumber;
+        }
+        public int getCredits()
+        {
+            return credits;
+        }
+        public void setCredits(int Credits)
+        {
+            credits = Credits;
+        }
+        public string[] getItemRewards()
+        {
+            return items;
+        }
+        public void setItemRewards(string[] ItemRewards)
+        {
+            items = ItemRewards;
+        }
+        public List<Tuple<string, int>> getCountedItemRewards()
+        {
+            return countedItems;
+        }
+        public void setCountedItemRewards(List<Tuple<string, int>> CountedItemRewards)
+        {
+            countedItems = CountedItemRewards;
         }
     }
 }
