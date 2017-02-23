@@ -16,11 +16,13 @@ namespace Talorn
 
         /// <summary>
         /// The time that the alert starts at.
+        /// The value is default set to -1, meaning that it is unset. The value will be set to -2 if it could not be read.
         /// </summary>
         private long activation = -1;
 
         /// <summary>
         /// The time that the alert ends at.
+        /// The value is default set to -1, meaning that it is unset. The value will be set to -2 if it could not be read.
         /// </summary>
         private long expiry = -1;
 
@@ -53,13 +55,13 @@ namespace Talorn
 
         /// <summary>
         /// Shows the minimum level of enemies on the mission. Note that the minimum level will increase during endless missions such as defence and survival.
-        /// The value is default set to -1, meaning that it is unset.
+        /// The value is default set to -1, meaning that it is unset. The value will be set to -2 if it could not be read.
         /// </summary>
         private int minEnemyLevel = -1;
 
         /// <summary>
         /// Shows the maximum level of enemies on the mission. Note that the maximum level will increase during endless missions such as defence and survival.
-        /// The value is default set to -1, meaning that it is unset.
+        /// The value is default set to -1, meaning that it is unset. The value will be set to -2 if it could not be read.
         /// </summary>
         private int maxEnemyLevel = -1;
 
