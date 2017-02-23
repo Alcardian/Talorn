@@ -8,7 +8,7 @@ namespace Talorn
     public class Talorn_Alert
     {
         /// <summary>
-        /// The unique ID of the alert
+        /// The unique ID of the alert.
         /// </summary>
         private string id;
         //AlertTime activation;
@@ -107,7 +107,7 @@ namespace Talorn
         /// Create an alert object with the values contained in a string with json data for one alert.
         /// </summary>
         /// <param name="alertString">A string that contains the json data of one alert.</param>
-        public Talorn_Alert(String alertString)
+        public Talorn_Alert(string alertString)
         {
             string temp = "";
 
