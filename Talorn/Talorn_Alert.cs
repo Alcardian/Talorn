@@ -78,9 +78,12 @@ namespace Talorn
 
         /// <summary>
         /// Indicates the number of waves that the player needs to complete to finish the mission if it's a wave based mission such as defence.
-        /// The value is set to 0 if isn't a wave based mission.
+        /// The value is set to -1 if isn't a wave based mission or -2 if it failed to read the value.
         /// </summary>
-        private int maxWaveNum = 0;
+        /// <remarks>
+        /// Used by mission types; Defence, Mobile Defence, Inteligence (Spy)
+        /// </remarks>
+        private int maxWaveNum = -1;
 
         /// <summary>
         /// Shows how much credits are earned by completing the mission.
@@ -260,6 +263,27 @@ namespace Talorn
                 sharkwingMission = (temp.ToLower() == "true");
             }
 
+            // Maximum Wave Numbers
+            // Not all alerts have it
+            if (alertString.IndexOf("\"maxWaveNum\":") > -1)
+            {
+                temp = alertString.Substring(alertString.IndexOf("\"maxWaveNum\":"));
+                temp = temp.Substring(temp.IndexOf(':')+1);
+                temp = temp.Remove(temp.IndexOf(','));
+                {
+                    int j;
+                    if (Int32.TryParse(temp, out j))
+                    {
+                        maxWaveNum = j;
+                    }
+                    else
+                    {
+                        // Could not parse if this happened
+                        maxWaveNum = -2;
+                    }
+                }
+            }
+
             //Mission Reward
             if (alertString.IndexOf("missionReward") > -1)
             {
@@ -422,8 +446,11 @@ namespace Talorn
                 tmp += "\nSharkwing Mission";
             }
 
-            // Maximum Wave Numbers
-
+            // Maximum Wave Number
+            if (maxWaveNum != -1)
+            {
+                tmp += "\nMaximum Wave Number: " + maxWaveNum;
+            }
 
             // Credits
             if (credits != 0)
