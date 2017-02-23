@@ -7,36 +7,106 @@ namespace Talorn
 {
     public class Talorn_Alert
     {
+        /// <summary>
+        /// The unique ID of the alert
+        /// </summary>
         private string id;
         //AlertTime activation;
         //AlertTime expiry;
+
+        /// <summary>
+        /// The time that the alert starts at.
+        /// </summary>
         private long activation = -1;
+
+        /// <summary>
+        /// The time that the alert ends at.
+        /// </summary>
         private long expiry = -1;
 
+        /// <summary>
+        /// Describe which type of a mission it is.
+        /// The value is set to "Unknown" if it havn't tried or failed to identify the Mission Type.
+        /// </summary>
         private string missionType = "Unknown";
+
+        /// <summary>
+        /// Describe which faction you will be facing on the mission.
+        /// The value is set to "Unknown" if it havn't tried or failed to identify the faction.
+        /// </summary>
         private string faction = "Unknown";
+
+        /// <summary>
+        /// Shows the location of the mission.
+        /// The value is set to "Unknown" if it havn't tried or failed to identify the location.
+        /// </summary>
         private string location = "Unknown";
+
+        /// <summary>
+        /// Describes what the default mission area for the location have been overridden as.
+        /// The value is set to "Unknown" if it havn't tried or failed to identify the level override.
+        /// If the value is set to "Default", then it is unchanged from the standard for that location.
+        /// </summary>
         private string levelOverride = "Unknown";
-        //String enemySpec;
+
+        //String enemySpec; // Unimplemented variable from the Warframe API data
+
+        /// <summary>
+        /// Shows the minimum level of enemies on the mission. Note that the minimum level will increase during endless missions such as defence and survival.
+        /// The value is default set to -1, meaning that it is unset.
+        /// </summary>
         private int minEnemyLevel = -1;
+
+        /// <summary>
+        /// Shows the maximum level of enemies on the mission. Note that the maximum level will increase during endless missions such as defence and survival.
+        /// The value is default set to -1, meaning that it is unset.
+        /// </summary>
         private int maxEnemyLevel = -1;
-        //double difficulty;
-        //int seed;
+
+        //double difficulty;    // Unimplemented variable from the Warframe API data
+        //int seed; // Unimplemented variable from the Warframe API data
+
+        /// <summary>
+        /// Indicates if this mission requires the player to have an Archwing.
+        /// </summary>
         private bool archwingRequired = false;
+
+        /// <summary>
+        /// Indicates if this mission contains underwater areas that the Archwing can be used at.
+        /// </summary>
         private bool sharkwingMission = false;
+
+        /// <summary>
+        /// Indicates the number of waves that the player needs to complete to finish the mission if it's a wave based mission such as defence.
+        /// The value is set to 0 if isn't a wave based mission.
+        /// </summary>
         private int maxWaveNum = 0;
 
+        /// <summary>
+        /// Shows how much credits are earned by completing the mission.
+        /// </summary>
         private int credits = 0;
+
+        /// <summary>
+        /// Shows the item rewards of the mission. The player will be rewarded with 1 of each item in the array.
+        /// The value is set to null if it's unset.
+        /// </summary>
         private string[] items = null;
-        //List<string> items = new List<string>();
+
+        /// <summary>
+        /// Shows the item rewards of the mission. The player will be rewarded with as many of the items as the number indicates.
+        /// </summary>
         List<Tuple<string, int>> countedItems = new List<Tuple<string, int>>();
 
+        /// <summary>
+        /// Create an alert object with the values contained in a string with json data for one alert.
+        /// </summary>
+        /// <param name="alertString">A string that contains the json data of one alert.</param>
         public Talorn_Alert(String alertString)
         {
-            //List<string> buffer = new List<string>();
             string temp = "";
 
-            //ID
+            // ID
             temp = alertString.Substring(alertString.IndexOf("_id"));
             temp = temp.Substring(temp.IndexOf('{'));
             temp = temp.Substring(temp.IndexOf(':'));
@@ -44,17 +114,15 @@ namespace Talorn
             temp = temp.Remove(temp.IndexOf('}'));
             temp = temp.Remove(temp.Length - 1);
             temp = temp.Substring(temp.LastIndexOf('\"') + 1);
-            //buffer.Add("ID: " + temp);
             id = temp;
 
-            //Activation
+            // Activation
             temp = alertString.Substring(alertString.IndexOf("Activation"));
             temp = temp.Substring(temp.IndexOf('{'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf('}'));
             temp = temp.Remove(temp.Length - 1);
             temp = temp.Substring(temp.LastIndexOf('\"') + 1);
-            //buffer.Add("Activation: " + temp);
             {
                 long j;
                 if (Int64.TryParse(temp, out j))
@@ -63,19 +131,18 @@ namespace Talorn
                 }
                 else
                 {
-                    //Could not parse if this happened
+                    // Could not parse if this happened
                     activation = -2;
                 }
             }
 
-            //Expiry
+            // Expiry
             temp = alertString.Substring(alertString.IndexOf("Expiry"));
             temp = temp.Substring(temp.IndexOf('{'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf('}'));
             temp = temp.Remove(temp.Length - 1);
             temp = temp.Substring(temp.LastIndexOf('\"') + 1);
-            //buffer.Add("Expiry: " + temp);
             {
                 long j;
                 if (Int64.TryParse(temp, out j))
@@ -84,42 +151,40 @@ namespace Talorn
                 }
                 else
                 {
-                    //Could not parse if this happened
+                    // Could not parse if this happened
                     expiry = -2;
                 }
             }
 
-            //Mission Type
+            // Mission Type
             temp = alertString.Substring(alertString.IndexOf("missionType"));
             temp = temp.Substring(temp.IndexOf(':'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf(','));
             temp = temp.Remove(temp.Length - 1);
             temp = temp.Substring(temp.LastIndexOf('\"') + 1);
-            //buffer.Add("Mission Type: " + temp);
             missionType = temp;
 
-            //faction
+            // Faction
             temp = alertString.Substring(alertString.IndexOf("faction"));
             temp = temp.Substring(temp.IndexOf(':'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf(','));
             temp = temp.Remove(temp.Length - 1);
             temp = temp.Substring(temp.LastIndexOf('\"') + 1);
-            //buffer.Add("Faction: " + temp);
             faction = temp;
 
-            //location
+            // Location
             temp = alertString.Substring(alertString.IndexOf("location"));
             temp = temp.Substring(temp.IndexOf(':'));
             temp = temp.Substring(1);
             temp = temp.Remove(temp.IndexOf(','));
             temp = temp.Remove(temp.Length - 1);
             temp = temp.Substring(temp.LastIndexOf('\"') + 1);
-            //buffer.Add("Location: " + temp);
             location = temp;
 
-            //levelOverride, not always there
+            // Level Override
+            // Not all alerts have it
             if (alertString.IndexOf("levelOverride") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("levelOverride"));
@@ -128,11 +193,14 @@ namespace Talorn
                 temp = temp.Remove(temp.IndexOf(','));
                 temp = temp.Remove(temp.Length - 1);
                 temp = temp.Substring(temp.LastIndexOf('\"') + 1);
-                //buffer.Add("levelOverride: " + temp);
                 levelOverride = temp;
             }
+            else
+            {
+                levelOverride = "Default";
+            }
 
-            //int minEnemyLevel
+            // Min Enemy Level
             if (alertString.IndexOf("\"minEnemyLevel\":") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("\"minEnemyLevel\":"));
@@ -146,13 +214,13 @@ namespace Talorn
                     }
                     else
                     {
-                        //Could not parse if this happened
+                        // Could not parse if this happened
                         minEnemyLevel = -1;
                     }
                 }
             }
 
-            //int maxEnemyLevel
+            // Max Enemy Level
             if (alertString.IndexOf("\"maxEnemyLevel\":") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("\"maxEnemyLevel\":"));
@@ -166,39 +234,36 @@ namespace Talorn
                     }
                     else
                     {
-                        //Could not parse if this happened
+                        // Could not parse if this happened
                         maxEnemyLevel = -1;
                     }
                 }
             }
 
-            //Archwing
+            // Archwing
             if (alertString.IndexOf("archwingRequired") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("archwingRequired"));
                 temp = temp.Substring(temp.IndexOf(':'));
                 temp = temp.Substring(1);
                 temp = temp.Remove(temp.IndexOf(','));
-                //buffer.Add("archwingRequired: " + temp);
                 archwingRequired = (temp.ToLower() == "true");
             }
 
-            //shardwing
+            // Shardwing
             if (alertString.IndexOf("isSharkwingMission") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("isSharkwingMission"));
                 temp = temp.Substring(temp.IndexOf(':'));
                 temp = temp.Substring(1);
                 temp = temp.Remove(temp.IndexOf(','));
-                //buffer.Add("isSharkwingMission: " + temp);
                 sharkwingMission = (temp.ToLower() == "true");
             }
 
-            //MissionReward
-            //if (false)
+            //Mission Reward
             if (alertString.IndexOf("missionReward") > -1)
             {
-                //MissionReward, credits
+                // MissionReward, Credits
                 if (alertString.IndexOf("\"credits\":") > -1)
                 {
                     temp = alertString.Substring(alertString.IndexOf("\"credits\":"));
@@ -212,7 +277,6 @@ namespace Talorn
                     {
                         temp = temp.Remove(temp.IndexOf('}'));
                     }
-                    //buffer.Add("Credtis: " + temp);
                     {
                         int j;
                         if (Int32.TryParse(temp, out j))
@@ -221,13 +285,13 @@ namespace Talorn
                         }
                         else
                         {
-                            //Could not parse if this happened
+                            // Could not parse if this happened
                             credits = -2;
                         }
                     }
                 }
 
-                //MissionReward, items
+                // MissionReward, Items
                 if (alertString.IndexOf("\"items\":") > -1)
                 {
                     temp = alertString.Substring(alertString.IndexOf("\"items\":"));
@@ -250,7 +314,6 @@ namespace Talorn
                     {
                         temp = temp.Remove(temp.Length - 1);
                     }
-                    //buffer.Add("Items: " + temp);
                     items = temp.Split(',');
                     for (int i=0; i<items.Length; i++)
                     {
@@ -265,7 +328,7 @@ namespace Talorn
                     }
                 }
 
-                //MissionReward, counteditems
+                // MissionReward, Counted Items
                 if (alertString.IndexOf("\"countedItems\":") > -1)
                 {
                     temp = alertString.Substring(alertString.IndexOf("\"countedItems\":"));
@@ -277,11 +340,11 @@ namespace Talorn
                         temp = temp.Remove(c);
                         temp += "]";
 
-                        string name = temp.Remove(temp.IndexOf(',')-1);
+                        string name = temp.Remove(temp.IndexOf(',')-1); // Name = name of the item.
                         name = name.Substring(name.IndexOf("\"ItemType\":"));
                         name = name.Substring(name.IndexOf(':')+2);
 
-                        int count;
+                        int count;  // Count = number of the item.
                         temp = temp.Substring(temp.IndexOf("\"ItemCount\":"));
                         temp = temp.Substring(temp.IndexOf(':')+1);
                         temp = temp.Remove(temp.IndexOf('}'));
@@ -293,79 +356,82 @@ namespace Talorn
                             }
                             else
                             {
-                                //Could not parse if this happened
+                                // Could not parse if this happened
                                 count = -1;
                             }
                         }
-
                         countedItems.Add(new Tuple<string, int>(name, count));
                     }
                 }
             }
         }
 
-        // Prints the alert data
+        /// <summary>
+        /// Prints the alert data, ignores to print empty values
+        /// </summary>
         public string printAlert()
         {
             string tmp = "ID: " + id;
             tmp += "\nActivation: " + activation;
             tmp += "\nExpiry: " + expiry;
 
-            //string missionType;
+            // MissionType
             if (missionType != "Unknown")
             {
                 tmp += "\nExpiry: " + missionType;
             }
 
-            //string faction;
+            // Faction
             if (faction != "Unknown")
             {
                 tmp += "\nFaction: " + faction;
             }
 
-            //string location;
+            // Location
             if (location != "Unknown")
             {
                 tmp += "\nLocation: " + location;
             }
 
-            //string levelOverride;
-            if (levelOverride != "Unknown")
+            // Level Override
+            if (levelOverride != "Unknown" && levelOverride != "Default")
             {
                 tmp += "\nlevelOverride: " + levelOverride;
             }
-            //int minEnemyLevel;
+            // Minimum Enemy Level
             if (minEnemyLevel != -1)
             {
                 tmp += "\nMinimum Enemy Level: " + minEnemyLevel;
             }
 
-            //int maxEnemyLevel;
+            // Maximum Enemy Level
             if (maxEnemyLevel != -1)
             {
                 tmp += "\nMaximum Enemy Level: " + maxEnemyLevel;
             }
 
-            //bool archwingRequired = false;
+            // Archwing
             if (archwingRequired)
             {
                 tmp += "\nArchwing Required";
             }
 
-            //bool sharkwingMission = false;
+            // Sharkwing Mission
             if (sharkwingMission)
             {
                 tmp += "\nSharkwing Mission";
             }
-            //int maxWaveNum = 0;
 
-            //int credits = 0;
+            // Maximum Wave Numbers
+
+
+            // Credits
             if (credits != 0)
             {
                 tmp += "\nCredits: " + credits;
             }
 
-            //string[] items;
+            // Items
             if (items != null)
             {
                 tmp += "\nItems: ";
@@ -376,7 +442,7 @@ namespace Talorn
                 tmp = tmp.Remove(tmp.Length-2);
             }
 
-            //List<Tuple<string, int>> countedItems;
+            // Counted Items
             if (countedItems.Count > 0)
             {
                 tmp += "\nCounted Items: ";
@@ -386,7 +452,6 @@ namespace Talorn
                 }
                 tmp = tmp.Remove(tmp.Length - 2);
             }
-
             return tmp;
         }
 
