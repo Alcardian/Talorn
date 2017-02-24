@@ -8,11 +8,25 @@ namespace Talorn
 {
     public class Talorn_Core
     {
-        public static String PC_URL = "http://content.warframe.com/dynamic/worldState.php";
-        public static String XB1_URL = "http://content.xb1.warframe.com/dynamic/worldState.php";
-        public static String PS4_URL = "http://content.ps4.warframe.com/dynamic/worldState.php";
+        /// <summary>
+        /// URL to the Warframe API for the PC platform.
+        /// </summary>
+        public static string PC_URL = "http://content.warframe.com/dynamic/worldState.php";
 
-        public static String[] DATA_CATEGORIES = {"\"Events\":[", "\"Goals\":[", "\"Alerts\":[", "\"Sorties\":[",
+        /// <summary>
+        /// URL to the Warframe API for the X-Box 1 platform.
+        /// </summary>
+        public static string XB1_URL = "http://content.xb1.warframe.com/dynamic/worldState.php";
+
+        /// <summary>
+        /// URL to the Warframe API for the Playstation 4 platform.
+        /// </summary>
+        public static string PS4_URL = "http://content.ps4.warframe.com/dynamic/worldState.php";
+
+        /// <summary>
+        /// Text strings for the different data categories that are returned from the Warframe API.
+        /// </summary>
+        public static string[] DATA_CATEGORIES = {"\"Events\":[", "\"Goals\":[", "\"Alerts\":[", "\"Sorties\":[",
         "\"SyndicateMissions\":[", "\"ActiveMissions\":[", "\"GlobalUpgrades\":[", "\"FlashSales\":[",
         "\"Invasions\":[", "\"HubEvents\":[", "\"NodeOverrides\":[", "\"BadlandNodes\":[", "\"History\":[",
         "\"VoidTraders\":[", "\"PrimeVaultAvailabilities\":[", "\"DailyDeals\":[", "\"PVPChallengeInstances\":["};
@@ -24,7 +38,12 @@ namespace Talorn
         };
         */
 
-        public static String getRawData(String url)
+        /// <summary>
+        /// Returns the Warframe API data from the location that the URL points to.
+        /// </summary>
+        /// <param name="url">The web URL to the Warframe API</param>
+        /// <returns></returns>
+        public static string getRawData(string url)
         {
             string data = "no data -_-";
 
@@ -52,9 +71,15 @@ namespace Talorn
             return data;
         }
 
-        public static String getDataCategory(String data, String dataCategory)
+        /// <summary>
+        /// Extracts data belonging to a single category from the data string.
+        /// </summary>
+        /// <param name="data">The raw data</param>
+        /// <param name="dataCategory">Select a category from DATA_CATEGORIES.</param>
+        /// <returns></returns>
+        public static string getDataCategory(string data, string dataCategory)
         {
-            String buffer = data.Substring(data.IndexOf(dataCategory));
+            string buffer = data.Substring(data.IndexOf(dataCategory));
             buffer = buffer.Substring(buffer.IndexOf('[') + 1);
 
             int count = 1;
@@ -74,9 +99,14 @@ namespace Talorn
             return buffer.Remove(i - 1);
         }
 
-        public static String[] SeperateX(String data)
+        /// <summary>
+        /// Seperate all JSON objects on the same level and return the seperated items as an array.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string[] SeperateX(string data)
         {
-            List<String> buffer = new List<String>();
+            List<string> buffer = new List<string>();
 
             int count = 0;
             int lastMark = 0;
@@ -108,26 +138,35 @@ namespace Talorn
             return buffer.ToArray();
         }
 
-        public static int getEndOfJSON(String JSON_String, int start)
+        /// <summary>
+        /// Finds the index of the end of the JSON array or class.
+        /// </summary>
+        /// <param name="JSON_String">A text string that contains the JSON data.</param>
+        /// <param name="start">Index of the location that the JSON array or class starts at.</param>
+        /// <returns>Index of the end of the JSON array or class.
+        /// Returns -1 if start points to a higher number than the JSON_String's length
+        /// Returns -2 if the start index doesn't point to an array or class.
+        /// Returns -3 if the method fails to find the end of the JSON array or class.</returns>
+        public static int getEndOfJSON(string JSON_String, int start)
         {
             if (JSON_String.Length < start)
             {
                 return -1;
             }
 
-            char charStart = 'S';
-            char charEnd = 'P';
-            if (JSON_String[start] == '{')
+            char charStart = 'S';   // Random start value :P
+            char charEnd = 'P'; // Random start value :P
+            if (JSON_String[start] == '{')  // True if the start index points to a class.
             {
                 charStart = '{';
                 charEnd = '}';
             }
-            else if (JSON_String[start] == '[')
+            else if (JSON_String[start] == '[') // True if the start index points to an array.
             {
                 charStart = '[';
                 charEnd = ']';
             }
-            else
+            else // The start index doesn't point to an array or class.
             {
                 return -2;
             }
