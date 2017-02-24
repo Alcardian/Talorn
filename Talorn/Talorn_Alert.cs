@@ -30,6 +30,7 @@ namespace Talorn
         /// Describe which type of a mission it is.
         /// The value is set to "Unknown" if it havn't tried or failed to identify the Mission Type.
         /// </summary>
+        /// <remarks>MT_TERRITORY = Interception</remarks>
         private string missionType = "Unknown";
 
         /// <summary>
