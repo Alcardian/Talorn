@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Talorn
+namespace Alcardian.Talorn
 {
     /// <summary>
     /// Data and methods related to Warframe Alerts.
-    /// This method have been moved to the Alcardian.Talorn class library under the name Alerts.
-    /// Will remove this method in the future and use the new instead.
     /// </summary>
-    public class Talorn_Alert
+    public class Alert
     {
         /// <summary>
         /// The unique ID of the alert.
@@ -113,7 +112,7 @@ namespace Talorn
         /// Create an alert object with the values contained in a string with json data for one alert.
         /// </summary>
         /// <param name="alertString">A string that contains the json data of one alert.</param>
-        public Talorn_Alert(string alertString)
+        public Alert(string alertString)
         {
             string temp = "";
 
@@ -215,7 +214,7 @@ namespace Talorn
             if (alertString.IndexOf("\"minEnemyLevel\":") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("\"minEnemyLevel\":"));
-                temp = temp.Substring(temp.IndexOf(':')+1);
+                temp = temp.Substring(temp.IndexOf(':') + 1);
                 temp = temp.Remove(temp.IndexOf(','));
                 {
                     int j;
@@ -276,7 +275,7 @@ namespace Talorn
             if (alertString.IndexOf("\"maxWaveNum\":") > -1)
             {
                 temp = alertString.Substring(alertString.IndexOf("\"maxWaveNum\":"));
-                temp = temp.Substring(temp.IndexOf(':')+1);
+                temp = temp.Substring(temp.IndexOf(':') + 1);
                 temp = temp.Remove(temp.IndexOf(','));
                 {
                     int j;
@@ -347,15 +346,15 @@ namespace Talorn
                         temp = temp.Remove(temp.Length - 1);
                     }
                     items = temp.Split(',');
-                    for (int i=0; i<items.Length; i++)
+                    for (int i = 0; i < items.Length; i++)
                     {
                         if (items[i].IndexOf('\"') == 0)
                         {
                             items[i] = items[i].Substring(1);
                         }
-                        if(items[i].LastIndexOf('\"') == (items[i].Length - 1))
+                        if (items[i].LastIndexOf('\"') == (items[i].Length - 1))
                         {
-                            items[i] = items[i].Remove(items[i].Length-1);
+                            items[i] = items[i].Remove(items[i].Length - 1);
                         }
                     }
                 }
@@ -367,18 +366,18 @@ namespace Talorn
                     temp = temp.Substring(temp.IndexOf('['));
 
                     int c;
-                    if ((c = Talorn_Core.getEndOfJSON(temp, 0)) > -1)
+                    if ((c = Core.getEndOfJSON(temp, 0)) > -1)
                     {
                         temp = temp.Remove(c);
                         temp += "]";
 
-                        string name = temp.Remove(temp.IndexOf(',')-1); // Name = name of the item.
+                        string name = temp.Remove(temp.IndexOf(',') - 1); // Name = name of the item.
                         name = name.Substring(name.IndexOf("\"ItemType\":"));
-                        name = name.Substring(name.IndexOf(':')+2);
+                        name = name.Substring(name.IndexOf(':') + 2);
 
                         int count;  // Count = number of the item.
                         temp = temp.Substring(temp.IndexOf("\"ItemCount\":"));
-                        temp = temp.Substring(temp.IndexOf(':')+1);
+                        temp = temp.Substring(temp.IndexOf(':') + 1);
                         temp = temp.Remove(temp.IndexOf('}'));
                         {
                             int j;
@@ -397,7 +396,7 @@ namespace Talorn
                 }
             }
         }
-
+        //
         /// <summary>
         /// Prints the alert data, ignores to print empty values
         /// </summary>
@@ -474,7 +473,7 @@ namespace Talorn
                 {
                     tmp += item + ", ";
                 }
-                tmp = tmp.Remove(tmp.Length-2);
+                tmp = tmp.Remove(tmp.Length - 2);
             }
 
             // Counted Items

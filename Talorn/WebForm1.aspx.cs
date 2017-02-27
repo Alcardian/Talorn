@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Alcardian.Talorn;
 
 namespace Talorn
 {
@@ -17,13 +18,14 @@ namespace Talorn
         protected void Button_Alert_Click(object sender, EventArgs e)
         {
             this.TextField.InnerText = "";
-            string[] temp = Talorn_Core.SeperateX(Talorn_Core.getDataCategory(Talorn_Core.getRawData(Talorn_Core.PC_URL), Talorn_Core.DATA_CATEGORIES[2]));
+            //string[] temp = Talorn_Core.SeperateX(Talorn_Core.getDataCategory(Talorn_Core.getRawData(Talorn_Core.PC_URL), Talorn_Core.DATA_CATEGORIES[2]));
+            string[] temp = Core.SeperateX(Core.getDataCategory(Talorn_Core.getRawData(Core.PC_URL), Core.DATA_CATEGORIES[2]));
             string buffer = "";
 
             for (int i = 0; i < temp.Length; i++)
             {
                 buffer += "Raw\n" + temp[i] + "\n\n\n";
-                Talorn_Alert alert = new Talorn_Alert(temp[i]);
+                Alert alert = new Alert(temp[i]);
                 buffer += "Extracted data\n";
                 buffer += alert.printAlert() + "\n\n\n\n\n\n";
             }

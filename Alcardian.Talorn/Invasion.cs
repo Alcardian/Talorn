@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Talorn
+namespace Alcardian.Talorn
 {
-    /// <summary>
-    /// This method have been moved to the Alcardian.Talorn class library under the name Invasion.
-    /// Will remove this method in the future and use the new instead.
-    /// </summary>
     public class Talorn_Invasion
     {
         /// <summary>

@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Talorn
+namespace Alcardian.Talorn
 {
-    /// <summary>
-    /// This method have been moved to the Alcardian.Talorn class library under the name Core.
-    /// Will remove this method in the future and use the new instead.
-    /// </summary>
-    public class Talorn_Core
+    public class Core
     {
         /// <summary>
         /// URL to the Warframe API for the PC platform.
@@ -51,7 +48,10 @@ namespace Talorn
         {
             string data = "no data -_-";
 
+            // TODO: Rewritte to work on all platforms
+            /**
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
             if (response.StatusCode == HttpStatusCode.OK)
@@ -72,6 +72,7 @@ namespace Talorn
                 readStream.Close();
             }
             response.Close();
+            **/
             return data;
         }
 
