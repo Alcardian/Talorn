@@ -55,14 +55,14 @@ namespace Alcardian.Talorn
         private Tuple<string, int> defenderReward = null;
 
         /// <summary>
-        /// The faction that the attackers will face.
+        /// The attacking faction.
         /// </summary>
-        private string AEF = "Unknown"; // Attacker Ememy Faction
+        private string AF = "Unknown"; // Attacker Ememy Faction
 
         /// <summary>
-        /// The faction that the defenders will face.
+        /// The defender faction.
         /// </summary>
-        private string DEF = "Unknown"; // Defender Ememy Faction
+        private string DF = "Unknown"; // Defender Ememy Faction
 
         /// <summary>
         /// Create an invasion object with the values contained in a string with json data for one invasion.
@@ -73,24 +73,13 @@ namespace Alcardian.Talorn
             string temp = "";
 
             // ID
-            temp = iString.Substring(iString.IndexOf("_id"));
-            temp = temp.Substring(temp.IndexOf('{'));
-            temp = temp.Substring(temp.IndexOf(':')+2);
-            temp = temp.Remove(temp.IndexOf('}'));
-            temp = temp.Remove(temp.Length - 1);
-            id = temp;
+            id = Core.getDatavalue_s(iString.Substring(iString.IndexOf("_id")), "{");
 
             // Faction
-            temp = iString.Substring(iString.IndexOf("Faction"));
-            temp = temp.Substring(temp.IndexOf(':')+2);
-            temp = temp.Remove(temp.IndexOf(',')-1);
-            faction = temp;
+            faction = Core.getDatavalue_s(iString, "Faction");
 
             // Node
-            temp = iString.Substring(iString.IndexOf("Node"));
-            temp = temp.Substring(temp.IndexOf(':') + 2);
-            temp = temp.Remove(temp.IndexOf(',') - 1);
-            node = temp;
+            node = Core.getDatavalue_s(iString, "Node");
 
             // Count
             temp = iString.Substring(iString.IndexOf("Count"));
@@ -127,10 +116,11 @@ namespace Alcardian.Talorn
             }
 
             // LocTag
-            temp = iString.Substring(iString.IndexOf("LocTag"));
-            temp = temp.Substring(temp.IndexOf(':') + 2);
-            temp = temp.Remove(temp.IndexOf(',') - 1);
-            locTag = temp;
+            //temp = iString.Substring(iString.IndexOf("LocTag"));
+            //temp = temp.Substring(temp.IndexOf(':') + 2);
+            //temp = temp.Remove(temp.IndexOf(',') - 1);
+            //locTag = temp;
+            locTag = Core.getDatavalue_s(iString, "LocTag");
 
             // Completed
             temp = iString.Substring(iString.IndexOf("Completed"));
@@ -141,27 +131,11 @@ namespace Alcardian.Talorn
             // Tuple<string, int> attackerReward
             // Tuple<string, int> defenderReward
 
-            // Attacker Ememy Faction
-            temp = iString.Substring(iString.IndexOf("AttackerMissionInfo"));
-            temp = temp.Substring(temp.IndexOf("faction"));
-            temp = temp.Substring(temp.IndexOf(':') + 2);
-            temp = temp.Remove(temp.IndexOf('}') - 1);
-            AEF = temp;
+            // Attacker Faction
+            AF = Core.getDatavalue_s(iString.Substring(iString.IndexOf("AttackerMissionInfo")), "faction");
 
-            // Defender Ememy Faction
-            temp = iString.Substring(iString.IndexOf("DefenderMissionInfo"));
-            temp = temp.Substring(temp.IndexOf("faction"));
-            temp = temp.Substring(temp.IndexOf(':') + 2);
-            // Fix as invasions against infested controled areas contains missionReward inside DefenderMissionInfo while areas controled by the other groups don't.
-            if (temp.IndexOf(',') > temp.IndexOf('}'))
-            {
-                temp = temp.Remove(temp.IndexOf('}') - 1);
-            }
-            else
-            {
-                temp = temp.Remove(temp.IndexOf(',') - 1);
-            }
-            DEF = temp;
+            // Defender Faction
+            DF = Core.getDatavalue_s(iString.Substring(iString.IndexOf("DefenderMissionInfo")), "faction");
         }
 
         public string printInvasion()
@@ -202,9 +176,9 @@ namespace Alcardian.Talorn
             tmp += "\nCompleted: " + completed;
 
             // Attacker Ememy Faction
-            if (AEF != "Unknown")
+            if (AF != "Unknown")
             {
-                tmp += "\nAttacker's Enemy Faction: " + AEF;
+                tmp += "\nAttacker Faction: " + AF;
             }
 
             // Tuple<string, int> attackerReward
@@ -214,9 +188,9 @@ namespace Alcardian.Talorn
             }
 
             // Defender Ememy Faction
-            if (DEF != "Unknown")
+            if (DF != "Unknown")
             {
-                tmp += "\nDefender's Enemy Faction: " + DEF;
+                tmp += "\nDefender Faction: " + DF;
             }
 
             // Tuple<string, int> defenderReward

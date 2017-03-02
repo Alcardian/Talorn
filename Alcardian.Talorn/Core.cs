@@ -194,5 +194,40 @@ namespace Alcardian.Talorn
             }
             return -3;
         }
+
+        /// <summary>
+        /// Extracts the value of 
+        /// </summary>
+        /// <param name="dString"></param>
+        /// <param name="data">the data type / keyword</param>
+        /// <returns></returns>
+        public static string getDatavalue_s(string dString, string data)
+        {
+            string temp = "";
+            temp = dString.Substring(dString.IndexOf(data));
+            temp = temp.Substring(temp.IndexOf(':') + 2);
+            //temp = temp.Remove(temp.IndexOf(',') - 1);
+
+            int a = temp.IndexOf(',');
+            int b = temp.IndexOf('}');
+            int c = temp.IndexOf(']');
+            if ((a > -1) && ((a < b || b < 0) && (a < c || c < 0)))
+            {
+                temp = temp.Remove(a - 1);
+            }
+            else if ((b > -1) && (b < c || c < 0))
+            {
+                temp = temp.Remove(b - 1);
+            }
+            else if (c < 0)
+            {
+                temp = temp.Remove(c - 1);
+            }
+            else
+            {
+                temp = "Unknown";
+            }
+            return temp;
+        }
     }
 }
