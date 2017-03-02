@@ -201,7 +201,7 @@ namespace Alcardian.Talorn
         /// <param name="dString"></param>
         /// <param name="data">the data type / keyword</param>
         /// <returns></returns>
-        public static string getDatavalue_s(string dString, string data)
+        public static string getDataValue_s(string dString, string data)
         {
             string temp = "";
             temp = dString.Substring(dString.IndexOf(data));

@@ -73,13 +73,13 @@ namespace Alcardian.Talorn
             string temp = "";
 
             // ID
-            id = Core.getDatavalue_s(iString.Substring(iString.IndexOf("_id")), "{");
+            id = Core.getDataValue_s(iString.Substring(iString.IndexOf("_id")), "{");
 
             // Faction
-            faction = Core.getDatavalue_s(iString, "Faction");
+            faction = Core.getDataValue_s(iString, "Faction");
 
             // Node
-            node = Core.getDatavalue_s(iString, "Node");
+            node = Core.getDataValue_s(iString, "Node");
 
             // Count
             temp = iString.Substring(iString.IndexOf("Count"));
@@ -116,11 +116,7 @@ namespace Alcardian.Talorn
             }
 
             // LocTag
-            //temp = iString.Substring(iString.IndexOf("LocTag"));
-            //temp = temp.Substring(temp.IndexOf(':') + 2);
-            //temp = temp.Remove(temp.IndexOf(',') - 1);
-            //locTag = temp;
-            locTag = Core.getDatavalue_s(iString, "LocTag");
+            locTag = Core.getDataValue_s(iString, "LocTag");
 
             // Completed
             temp = iString.Substring(iString.IndexOf("Completed"));
@@ -132,10 +128,10 @@ namespace Alcardian.Talorn
             // Tuple<string, int> defenderReward
 
             // Attacker Faction
-            AF = Core.getDatavalue_s(iString.Substring(iString.IndexOf("AttackerMissionInfo")), "faction");
+            AF = Core.getDataValue_s(iString.Substring(iString.IndexOf("AttackerMissionInfo")), "faction");
 
             // Defender Faction
-            DF = Core.getDatavalue_s(iString.Substring(iString.IndexOf("DefenderMissionInfo")), "faction");
+            DF = Core.getDataValue_s(iString.Substring(iString.IndexOf("DefenderMissionInfo")), "faction");
         }
 
         public string printInvasion()
