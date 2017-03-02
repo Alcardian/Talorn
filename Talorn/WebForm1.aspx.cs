@@ -36,14 +36,15 @@ namespace Talorn
         protected void Button_Invasion_Click(object sender, EventArgs e)
         {
             this.TextField.InnerText = "";
-            string[] temp = Talorn_Core.SeperateX(Talorn_Core.getDataCategory(Talorn_Core.getRawData(Talorn_Core.PC_URL), Talorn_Core.DATA_CATEGORIES[8]));
+            string[] temp = Core.SeperateX(Core.getDataCategory(Talorn_Core.getRawData(Core.PC_URL), Core.DATA_CATEGORIES[8]));
             string buffer = "";
 
             for (int i = 0; i < temp.Length; i++)
             {
                 buffer += "Raw\n" + temp[i] + "\n\n";
-                buffer += "Class length: " + temp[i].Length + "\n" +
-                    "End of class index: " + Talorn_Core.getEndOfJSON(temp[i], 0) + "\n\n\n\n\n\n";
+                buffer += "Extracted data\n" + new Invasion(temp[i]).printInvasion() + "\n\n\n\n\n\n";
+                //buffer += "Class length: " + temp[i].Length + "\n" +
+                //    "End of class index: " + Core.getEndOfJSON(temp[i], 0) + "\n\n\n\n\n\n";
             }
             buffer = buffer.Remove(buffer.Length - 6);
             this.TextField.InnerText = buffer;
