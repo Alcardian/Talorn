@@ -229,5 +229,59 @@ namespace Alcardian.Talorn
             }
             return temp;
         }
+
+        public static int getDataValue_i(string dString, string data)
+        {
+            string temp = "";
+            temp = dString.Substring(dString.IndexOf(data));
+            temp = temp.Substring(temp.IndexOf(':') + 1);
+            temp = temp.Remove(temp.IndexOf(','));
+            {
+                int j;
+                if (Int32.TryParse(temp, out j))
+                {
+                    return j;
+                }
+                else
+                {
+                    // Could not parse if this happened
+                    return -1;
+                }
+            }
+        }
+
+        public static long getDataValue_long(string dString, string data)
+        {
+            {
+                string temp = "";
+                temp = dString.Substring(dString.IndexOf(data));
+                temp = temp.Substring(temp.IndexOf(':') + 1);
+                temp = temp.Remove(temp.IndexOf(','));
+                {
+                    long j;
+                    if (Int64.TryParse(temp, out j))
+                    {
+                        return j;
+                    }
+                    else
+                    {
+                        // Could not parse if this happened
+                        return -1;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the time since 1970 (used by warframe API for time).
+        /// </summary>
+        /// <returns></returns>
+        public static long getTime()
+        {
+            DateTime dt1970 = new DateTime(1970, 1, 1);
+            DateTime current = DateTime.UtcNow;
+            TimeSpan span = current - dt1970;
+            return System.Convert.ToInt64(Math.Round(span.TotalMilliseconds, 0));
+        }
     }
 }

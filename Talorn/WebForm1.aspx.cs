@@ -18,6 +18,7 @@ namespace Talorn
         protected void Button_Alert_Click(object sender, EventArgs e)
         {
             this.TextField.InnerText = "";
+            this.Display_Alert.InnerHtml = "";
             //string[] temp = Talorn_Core.SeperateX(Talorn_Core.getDataCategory(Talorn_Core.getRawData(Talorn_Core.PC_URL), Talorn_Core.DATA_CATEGORIES[2]));
             string[] temp = Core.SeperateX(Core.getDataCategory(Talorn_Core.getRawData(Core.PC_URL), Core.DATA_CATEGORIES[2]));
             string buffer = "";
@@ -28,9 +29,11 @@ namespace Talorn
                 Alert alert = new Alert(temp[i]);
                 buffer += "Extracted data\n";
                 buffer += alert.printAlert() + "\n\n\n\n\n\n";
+                this.Display_Alert.InnerHtml += alert.HTML_Alert();
             }
             buffer = buffer.Remove(buffer.Length-6);
             this.TextField.InnerText = buffer;
+            //this.Display_Alert.InnerHtml = "<span style=\"background-color: green;\">Test</span>";
         }
 
         protected void Button_Invasion_Click(object sender, EventArgs e)

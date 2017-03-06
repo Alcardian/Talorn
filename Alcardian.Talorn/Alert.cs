@@ -489,6 +489,40 @@ namespace Alcardian.Talorn
             return tmp;
         }
 
+        /// <summary>
+        /// Returns the alert as HTML
+        /// </summary>
+        /// <returns></returns>
+        public string HTML_Alert()
+        {
+            string buffer = "<p>";
+
+            buffer += "<span><b>" + location + "</b> Level " + minEnemyLevel + "-" + maxEnemyLevel + "</span><br>";
+            buffer += "<span><b>" + missionType + " - " + faction + "</b></span><br>";
+            buffer += "<span> Reward: ";
+
+            bool reward = false;
+            if (credits != 0)
+            {
+                buffer += credits + " Credits";
+                reward = true;
+            }
+            //TODO Add Items
+            //TODO Add Counted Items
+
+            if (reward) //remove the comma at the end
+            {
+                buffer.Remove(buffer.Length-3);
+            }
+            buffer += "</span>";
+
+            buffer += "<br><span class=\"AlertTime\" data-starttime=" + activation + " data-endtime=" + expiry + ">" + "</span>";
+
+            buffer += "</p>";
+
+            return buffer;
+        }
+
         public string getID()
         {
             return id;
