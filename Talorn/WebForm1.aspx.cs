@@ -12,13 +12,13 @@ namespace Talorn
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //this.TextField.InnerText = Talorn_Core.test();
+            loadData();
         }
 
         protected void Button_Alert_Click(object sender, EventArgs e)
         {
             this.TextField.InnerText = "";
-            this.Display_Alert.InnerHtml = "";
+            this.Display_Alert.InnerHtml = "<h2>Alerts</h2>";
             //string[] temp = Talorn_Core.SeperateX(Talorn_Core.getDataCategory(Talorn_Core.getRawData(Talorn_Core.PC_URL), Talorn_Core.DATA_CATEGORIES[2]));
             string[] temp = Core.SeperateX(Core.getDataCategory(Talorn_Core.getRawData(Core.PC_URL), Core.DATA_CATEGORIES[2]));
             string buffer = "";
@@ -51,6 +51,34 @@ namespace Talorn
             }
             buffer = buffer.Remove(buffer.Length - 6);
             this.TextField.InnerText = buffer;
+        }
+
+        protected void loadData()
+        {
+            string rawData = Talorn_Core.getRawData(Core.PC_URL);
+            //string[] temp = Core.SeperateX(Core.getDataCategory(Talorn_Core.getRawData(Core.PC_URL), Core.DATA_CATEGORIES[2]));
+            this.TextField.InnerText = "";
+            this.Display_Alert.InnerHtml = "<h2>Alerts</h2>";
+            this.Display_Invasion.InnerHtml = "<h2>Invasions</h2>";
+
+            // Alert
+            string[] temp = Core.SeperateX(Core.getDataCategory(rawData, Core.DATA_CATEGORIES[2]));
+            for (int i = 0; i < temp.Length; i++)
+            {
+                Alert alert = new Alert(temp[i]);
+                this.Display_Alert.InnerHtml += alert.HTML_Alert();
+            }
+
+            // Invasion
+            temp = Core.SeperateX(Core.getDataCategory(rawData, Core.DATA_CATEGORIES[8]));
+            for (int i = 0; i < temp.Length; i++)
+            {
+                Invasion invasion = new Invasion(temp[i]);
+                if (!invasion.isCompleted())
+                {
+                    this.Display_Invasion.InnerHtml += invasion.HTML_Invasion();
+                }
+            }
         }
     }
 }

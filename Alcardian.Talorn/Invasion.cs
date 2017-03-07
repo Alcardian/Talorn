@@ -198,6 +198,39 @@ namespace Alcardian.Talorn
             return tmp;
         }
 
+        /// <summary>
+        /// Returns the alert as HTML
+        /// </summary>
+        /// <returns></returns>
+        public string HTML_Invasion()
+        {
+            string buffer = "<p>";
+
+            buffer += "<span><b>" + node + "</b> - " + DF + " vs " + AF + "</span>";
+
+            //TODO fix contructor to load these values...
+            //buffer += "<br><span><b>" + defenderReward.Item1 + " (" + defenderReward.Item2 + ") vs ";
+            //buffer += attackerReward.Item1 + " (" + attackerReward.Item2 + ")" + "</b></span><br>";
+
+            double d = ((double)count / goal) * 100 ;
+            if (DF.Equals("FC_INFESTATION"))    //With infested
+            {
+                d += 100;
+            }
+            else   // Not Infested
+            {
+                d = d / 2;
+                d += 50;
+            }
+            //d = Math.Round(d, 2);
+
+            //buffer += "<br><span> Goal: " + goal + " || Count: " + count + " || " + d + "%</span>";
+            buffer += "<br><span> Goal: " + goal + " || Count: " + count + " || " + String.Format("{0:0.00}", d) + "%</span>";
+            buffer += "<br><span> Completed: " + completed + "</span>";
+
+            return buffer;
+        }
+
         public string getID()
         {
             return id;
@@ -222,10 +255,38 @@ namespace Alcardian.Talorn
         {
             node = Node;
         }
-        // int count
-        // int goal
-        // string locTag
-        // bool completed
+        public int getCount()
+        {
+            return count;
+        }
+        public void setCount(int Count)
+        {
+            count = Count;
+        }
+        public int getGoal()
+        {
+            return goal;
+        }
+        public void setGoal(int Goal)
+        {
+            goal = Goal;
+        }
+        public string getLocTag()
+        {
+            return locTag;
+        }
+        public void setLocTag(string LocTag)
+        {
+            locTag = LocTag;
+        }
+        public bool isCompleted()
+        {
+            return completed;
+        }
+        public void setCompleted(bool Completed)
+        {
+            completed = Completed;
+        }
         // Tuple<string, int> attackerReward
         // Tuple<string, int> defenderReward
         // string AEF

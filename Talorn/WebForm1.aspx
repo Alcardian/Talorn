@@ -9,6 +9,15 @@
         #TextField {
             width: 800px;
         }
+        .Warper{
+            float:left;
+            padding:0em 1em 0em;
+            max-width:100%;
+            white-space:nowrap;
+            border-style: solid;
+            border-width: 1px;
+            margin-left: 1em;
+        }
     </style>
 </head>
 <body>
@@ -19,11 +28,15 @@
         <asp:Button ID="Button_Invasion" runat="server" OnClick="Button_Invasion_Click" Text="Invasion" />
         </div>
     </form>
-    <div style="width: 800px" id="Display_Alert" runat="server">
-        <span class="alertX" data-starttime="1488801024" data-endtime="1488803399" style="background-color: green;">
-
-        </span>
+    <div id="Display_Alert" class="Warper" runat="server">
+        <h2>Alerts</h2>
+        <span class="alertX"></span>
     </div>
+    <div id="Display_Invasion" class="Warper" runat="server">
+        <h2>Invasion</h2>
+        <span class="invasionX"></span>
+    </div>
+
     <script>
 // Update the count down every 1 second
 var x = setInterval(function() {
