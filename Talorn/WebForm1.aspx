@@ -73,6 +73,20 @@ var x = setInterval(function() {
         	alerts[i].innerHTML = "Ends in: " + toHHMMSS(Math.floor(j));
         }
     }
+
+    var voidFissures = document.getElementsByClassName("VoidFTime");
+    for (i = 0; i < voidFissures.length; i++) {
+        var j = (parseInt(voidFissures[i].getAttribute("data-endtime")) - d.getTime()) / 1000; //
+        if (parseInt(voidFissures[i].getAttribute("data-starttime")) > d.getTime()) {
+            voidFissures[i].innerHTML = "Starts in: " + toHHMMSS(Math.floor((parseInt(voidFissures[i].getAttribute("data-starttime")) - d.getTime()) / 1000));  //
+        }
+        else if(j < 0){
+            voidFissures[i].innerHTML = "Ends in: -" + toHHMMSS(Math.floor((j) * -1));
+        }
+        else{
+            voidFissures[i].innerHTML = "Ends in: " + toHHMMSS(Math.floor(j));
+        }
+    }
 }, 1000);
 </script>
 <script>

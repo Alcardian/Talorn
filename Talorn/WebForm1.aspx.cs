@@ -60,7 +60,7 @@ namespace Talorn
             this.TextField.InnerText = "";
             this.Display_Alert.InnerHtml = "<h2>Alerts</h2>";
             this.Display_Invasion.InnerHtml = "<h2>Invasions</h2>";
-            this.Display_Void_Fissures.InnerHtml = "<h2>Void Fissures (WIP)</h2>";
+            this.Display_Void_Fissures.InnerHtml = "<h2>Void Fissures</h2>";
 
             // Alert
             string[] temp = Core.SeperateX(Core.getDataCategory(rawData, Core.DATA_CATEGORIES[2]));
@@ -89,9 +89,11 @@ namespace Talorn
             for (int i = 0; i < temp.Length; i++)
             {
                 //this.Display_Void_Fissures.InnerHtml += temp[i] + "\n\n";
-                buffer += temp[i] + "<br><br>";
+                VoidFissure voidFissure = new VoidFissure(temp[i]);
+                this.Display_Void_Fissures.InnerHtml += voidFissure.HTML_VoidFissure();
+                //buffer += temp[i] + "<br><br>";
             }
-            this.Display_Void_Fissures.InnerHtml += buffer;
+            //this.Display_Void_Fissures.InnerHtml += buffer;
         }
 
         protected void Button_All_Click(object sender, EventArgs e)
