@@ -26,6 +26,7 @@ namespace Alcardian.Talorn
 
         /// <summary>
         /// Text strings for the different data categories that are returned from the Warframe API.
+        /// BadlandNodes = Dark Sector Nodes
         /// </summary>
         public static string[] DATA_CATEGORIES = {"\"Events\":[", "\"Goals\":[", "\"Alerts\":[", "\"Sorties\":[",
         "\"SyndicateMissions\":[", "\"ActiveMissions\":[", "\"GlobalUpgrades\":[", "\"FlashSales\":[",
@@ -270,6 +271,46 @@ namespace Alcardian.Talorn
                     }
                 }
             }
+        }
+
+        public static Tuple<string, int> get_dataValue_CountedItem(string dString, string data)
+        {
+            if (dString.IndexOf(data) < 0)
+            {
+                return new Tuple<string, int>("Unknown", -2);
+            }
+            string temp = dString.Substring(dString.IndexOf(data));
+            temp = temp.Substring(temp.IndexOf('['));
+
+            int c;
+            if ((c = Core.getEndOfJSON(temp, 0)) > -1)
+            {
+                temp = temp.Remove(c);
+                temp += "]";
+
+                string name = temp.Remove(temp.IndexOf(',') - 1); // Name = name of the item.
+                name = name.Substring(name.IndexOf("\"ItemType\":"));
+                name = name.Substring(name.IndexOf(':') + 2);
+
+                int count;  // Count = number of the item.
+                temp = temp.Substring(temp.IndexOf("\"ItemCount\":"));
+                temp = temp.Substring(temp.IndexOf(':') + 1);
+                temp = temp.Remove(temp.IndexOf('}'));
+                {
+                    int j;
+                    if (Int32.TryParse(temp, out j))
+                    {
+                        count = j;
+                    }
+                    else
+                    {
+                        // Could not parse if this happened
+                        count = -1;
+                    }
+                }
+                return new Tuple<string, int>(name, count);
+            }
+            return new Tuple<string, int>("Unknown", -1);
         }
 
         /// <summary>

@@ -502,19 +502,52 @@ namespace Alcardian.Talorn
             buffer += "<span> Reward: ";
 
             bool reward = false;
+
+            // Credits
             if (credits != 0)
             {
-                buffer += credits + " Credits";
+                buffer += credits + " Credits, ";
                 reward = true;
             }
-            //TODO Add Items
-            //TODO Add Counted Items
+
+            // Items
+            if (items != null)  //If there are items...
+            {
+                for (int i = 0; i < items.Length; i++)
+                {
+                    buffer += items[i] + ", ";
+                }
+                reward = true;
+            }
+
+            // Counted Items
+            for (int i = 0; i < countedItems.Count; i++)
+            {
+                buffer += countedItems[i].Item1 + "(" + countedItems[i].Item2 + "), ";
+            }
+            if (countedItems.Count > 0)
+            {
+                reward = true;
+            }
 
             if (reward) //remove the comma at the end
             {
-                buffer.Remove(buffer.Length-3);
+                buffer = buffer.Remove(buffer.Length-3);
             }
             buffer += "</span>";
+
+            // Archwing Warning
+            if (archwingRequired)
+            {
+                if (sharkwingMission)   // Sharkwing
+                {
+                    buffer += "<br><span><b>Sharkwing Mission!</b></span>";
+                }
+                else   // Normal Archwing
+                {
+                    buffer += "<br><span><b>Archwing Mission!</b></span>";
+                }
+            }
 
             buffer += "<br><span class=\"AlertTime\" data-starttime=" + activation + " data-endtime=" + expiry + ">" + "</span>";
 

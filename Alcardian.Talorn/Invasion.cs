@@ -125,7 +125,13 @@ namespace Alcardian.Talorn
             completed = (temp.ToLower() == "true");
 
             // Tuple<string, int> attackerReward
+            temp = iString;
+            attackerReward = Core.get_dataValue_CountedItem(temp, "\"countedItems\":");
+
             // Tuple<string, int> defenderReward
+            defenderReward = Core.get_dataValue_CountedItem(temp.Substring(temp.IndexOf("\"countedItems\":") +2), "\"countedItems\":");
+            //temp = iString.Substring(iString.LastIndexOf("\"countedItems\":"));
+            //temp = temp.Substring(temp.IndexOf('['));
 
             // Attacker Faction
             AF = Core.getDataValue_s(iString.Substring(iString.IndexOf("AttackerMissionInfo")), "faction");
@@ -208,9 +214,24 @@ namespace Alcardian.Talorn
 
             buffer += "<span><b>" + node + "</b> - " + DF + " vs " + AF + "</span>";
 
-            //TODO fix contructor to load these values...
-            //buffer += "<br><span><b>" + defenderReward.Item1 + " (" + defenderReward.Item2 + ") vs ";
-            //buffer += attackerReward.Item1 + " (" + attackerReward.Item2 + ")" + "</b></span><br>";
+            if (DF.Equals("FC_INFESTATION"))
+            {
+                if (attackerReward != null)
+                {
+                    buffer += "<br><span><b>" + attackerReward.Item1 + " (" + attackerReward.Item2 + ")" + "</b></span>";
+                }
+            }
+            else
+            {
+                if (defenderReward != null)
+                {
+                    buffer += "<br><span><b>" + defenderReward.Item1 + " (" + defenderReward.Item2 + ") vs ";
+                }
+                if (attackerReward != null)
+                {
+                    buffer += attackerReward.Item1 + " (" + attackerReward.Item2 + ")" + "</b></span>";
+                }
+            }
 
             double d = ((double)count / goal) * 100 ;
             if (DF.Equals("FC_INFESTATION"))    //With infested
@@ -287,9 +308,37 @@ namespace Alcardian.Talorn
         {
             completed = Completed;
         }
-        // Tuple<string, int> attackerReward
-        // Tuple<string, int> defenderReward
-        // string AEF
-        // string DEF
+        public Tuple<string, int> getAttackerReward()
+        {
+            return attackerReward;
+        }
+        public void setAttackerReward(Tuple<string, int> AttackerReward)
+        {
+            attackerReward = AttackerReward;
+        }
+        public Tuple<string, int> getDefenderReward()
+        {
+            return defenderReward;
+        }
+        public void setDefenderReward(Tuple<string, int> DefenderReward)
+        {
+            defenderReward = DefenderReward;
+        }
+        public string getAttackingFaction()
+        {
+            return AF;
+        }
+        public void setAttackingFaction(string AttackingFaction)
+        {
+            AF = AttackingFaction;
+        }
+        public string getDefendingFaction()
+        {
+            return AF;
+        }
+        public void setDefendingFaction(string DefendingFaction)
+        {
+            DF = DefendingFaction;
+        }
     }
 }

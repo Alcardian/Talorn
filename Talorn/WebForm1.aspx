@@ -18,23 +18,37 @@
             border-width: 1px;
             margin-left: 1em;
         }
+        .Warper2{
+            clear: left;
+            padding:1em 0em 0em 0em;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
     
-        <textarea id="TextField" name="S1" runat="server" rows="20" placeholder="Test"></textarea><asp:Button ID="Button_Alert" runat="server" OnClick="Button_Alert_Click" Text="Alert" />
+        <textarea id="TextField" name="S1" runat="server" rows="20" placeholder="Test"></textarea>
+        <asp:Button ID="Button_All" runat="server" Text="All" OnClick="Button_All_Click" />
+        <asp:Button ID="Button_Alert" runat="server" OnClick="Button_Alert_Click" Text="Alert" />
         <asp:Button ID="Button_Invasion" runat="server" OnClick="Button_Invasion_Click" Text="Invasion" />
         </div>
     </form>
-    <div id="Display_Alert" class="Warper" runat="server">
-        <h2>Alerts</h2>
-        <span class="alertX"></span>
+    <div class="Warper2">
+        <div id="Display_Alert" class="Warper" runat="server">
+            <h2>Alerts</h2>
+            <span class="alertX"></span>
+        </div>
+        <div id="Display_Invasion" class="Warper" runat="server">
+            <h2>Invasion</h2>
+            <span class="invasionX"></span>
+        </div>
     </div>
-    <div id="Display_Invasion" class="Warper" runat="server">
-        <h2>Invasion</h2>
-        <span class="invasionX"></span>
+    <div class="Warper2">
+        <div id="Display_Void_Fissures" class="Warper" runat="server">
+            <h2>Void Fissures</h2>
+            <span class="voidFissurex"></span>
+        </div>
     </div>
 
     <script>

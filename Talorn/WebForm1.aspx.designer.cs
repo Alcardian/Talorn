@@ -31,6 +31,15 @@ namespace Talorn {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea TextField;
         
         /// <summary>
+        /// Button_All control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_All;
+        
+        /// <summary>
         /// Button_Alert control.
         /// </summary>
         /// <remarks>
@@ -65,5 +74,14 @@ namespace Talorn {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Display_Invasion;
+        
+        /// <summary>
+        /// Display_Void_Fissures control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Display_Void_Fissures;
     }
 }

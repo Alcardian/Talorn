@@ -60,6 +60,7 @@ namespace Talorn
             this.TextField.InnerText = "";
             this.Display_Alert.InnerHtml = "<h2>Alerts</h2>";
             this.Display_Invasion.InnerHtml = "<h2>Invasions</h2>";
+            this.Display_Void_Fissures.InnerHtml = "<h2>Void Fissures (WIP)</h2>";
 
             // Alert
             string[] temp = Core.SeperateX(Core.getDataCategory(rawData, Core.DATA_CATEGORIES[2]));
@@ -79,6 +80,34 @@ namespace Talorn
                     this.Display_Invasion.InnerHtml += invasion.HTML_Invasion();
                 }
             }
+
+            // Void Fissure
+            temp = Core.SeperateX(Core.getDataCategory(rawData, Core.DATA_CATEGORIES[5]));
+            //temp = Core.SeperateX(Core.getDataCategory(rawData, Core.DATA_CATEGORIES[8]));
+            string buffer = "";
+            //buffer += temp.Length + "__:";
+            for (int i = 0; i < temp.Length; i++)
+            {
+                //this.Display_Void_Fissures.InnerHtml += temp[i] + "\n\n";
+                buffer += temp[i] + "<br><br>";
+            }
+            this.Display_Void_Fissures.InnerHtml += buffer;
+        }
+
+        protected void Button_All_Click(object sender, EventArgs e)
+        {
+            this.TextField.InnerText = "";
+            //string[] temp = Core.SeperateX(Core.getDataCategory(Talorn_Core.getRawData(Core.PC_URL), Core.DATA_CATEGORIES[2]));
+            //string[] temp = Core.SeperateX(Talorn_Core.getRawData(Core.PC_URL));
+            string[] temp = Core.SeperateX(Talorn_Core.getRawData(Core.PC_URL).Substring(1));
+            string buffer = "";
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                buffer += "Raw\n" + temp[i] + "\n\n\n\n\n\n";
+            }
+            buffer = buffer.Remove(buffer.Length - 6);
+            this.TextField.InnerText = buffer;
         }
     }
 }
